@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Catálogo de Receitas</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #ffc107; /* bg-warning color */
+        }
+
+        .container-fluid {
+            padding: 20px;
+        }
+
+        #pnlCatalogo {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: 350px;
+            margin: 65px;
+        }
+    </style>
+</head>
+
+<body onload="preencheCatalogo()">
+
+    <div class="container-fluid">
+        <h1>Catálogo de Receitas</h1>
+        <div id="pnlCatalogo"></div>
+    </div>
+
+    <script>
+        // Dados de receitas em formato JSON
+        const receitas = [
+        {
+                titulo: "Creme de camarão",
+                imagem: "caminho/imagem1.png",
+                preparo: "Doure os camarões com alho, reseve-os sepadamente. Na mesma panela refogue todos os temperos  e em seguida junte o creme de leite, os camarões e por útilmo o queijo mussarela ralado. Mexa bem e sirva",
+                ingredientes: ["3 creme de leite", "1 pimetão amarelo ", " 1 pimetão vermelho  " ,"2 cebolas" ,"3 tomates" ,"1 caldo de galinha" ,"400g de queijo mussarela"]
+            },
+            {
+                titulo: "Pudim",
+                imagem: "caminho/imagem1.png",
+                preparo: "Coloque o leite condensado no liquidificado e os ovos, com a mesma medida do leite condensado duas de leite, bata ate fica omogénia. Em uma forma caramelise o açúcar, depois que endurecer o caramelo despeje o pudim na forma e leve ao forno por duas horas a 200 graus em banho maria. ",
+                ingredientes: ["1 Leite condensado", "3 ovos","leite"]
+            },
+            {
+                titulo: "Creme de morango",
+                imagem: "caminho/imagem2.png",
+                preparo: "  Coloque em uma panela o leite condensado, o creme de leite e o ninho e leve ao fogo e mexa ate forma um creme. Corte os morangos em cubos e misture com o creme, coloque em um tijela e leve ao frizer por 30 minutos e sirva.",
+                ingredientes: ["1 leite condensado", "2 creme de leite", "2 xicara de leite em pó ninho","500g de morango"]
+            }
+            // Adicione mais receitas conforme necessário
+        ];
+
+        // Função para obter a lista de ingredientes em HTML
+        function getListaIngredientes(receita) {
+            return `<ul>${receita.ingredientes.map(ingrediente => `<li>${ingrediente}</li>`).reduce((a, b) => a + b, '')}</ul>`;
+        }
+
+        // Função para gerar o painel da receita em HTML
+        function getCard(receita) {
+            return `
+            <div class="card">
+                <img src="${receita.imagem}" class="card-img-top" alt="${receita.titulo}">
+                <div class="card-body">
+                    <h5 class="card-title">${receita.titulo}</h5>
+                    <div class="card-text">${getListaIngredientes(receita)}</div>
+                    <hr>
+                    <p>${receita.preparo}</p>
+                </div>
+            </div>`;
+        }
+
+        // Função para preencher o catálogo de receitas na página
+        function preencheCatalogo() {
+            const pnlCatalogo = document.getElementById('pnlCatalogo');
+            const htmlReceitas = receitas.map(receita => getCard(receita)).reduce((a, b) => a + b, '');
+            pnlCatalogo.innerHTML = htmlReceitas;
+        }
+    </script>
+
+</body>
+
+</html>
